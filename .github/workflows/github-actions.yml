@@ -1,0 +1,11 @@
+name: CD Pipeline
+on: [push]
+jobs:
+  development:
+    environment: development
+    strategy:
+      matrix:
+        os: [linux-latest] 
+    runs-on: ${{ matrix.os }}
+    steps:
+      - run: echo "Triggered by ${{ github.event_name }} event; Running on ${{ runner.os }} server hosted by GitHubjob"
