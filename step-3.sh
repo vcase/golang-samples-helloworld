@@ -6,8 +6,8 @@ set -eu
 
 cd $SCRIPTDIR/../github-actions
 
-stepNum=2
-stepName=staging
+stepNum=3
+stepName=production
 branchName="step-$stepNum"
 startCommit=$(git log --pretty=format:%H | tail -n $stepNum | head -n 1)
 
@@ -26,23 +26,18 @@ git checkout -b $branchName $startCommit
 
 mkdir -p .github/workflows 
 
-cat <<EOT > .github/workflows/main.yml
-name: main branch jobs
-on: 
-  push:
-    branches:
-      - main
-jobs:
+echo "
   $stepName:
     environment: $stepName
     runs-on: ubuntu-latest
+    needs: staging
     steps:
-      - run: echo "Lint"
-      - run: echo "Build"
-      - run: echo "Test"
-      - run: echo "Publish"
-      - run: echo "Deploy"    
-EOT
+      - run: echo \"Lint\"
+      - run: echo \"Build\"
+      - run: echo \"Test\"
+      - run: echo \"Publish\"
+      - run: echo \"Deploy\"    
+" >> .github/workflows/main.yml
 
 git add .
 git commit -m "$branchName $stepName workflow"
