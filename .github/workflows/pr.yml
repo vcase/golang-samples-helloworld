@@ -1,0 +1,7 @@
+name: pull-requests
+on: [pull_request]
+jobs:
+  development:
+    runs-on: linux-latest
+    steps:
+      - run: echo "Triggered by ${{ github.event_name }} event"
