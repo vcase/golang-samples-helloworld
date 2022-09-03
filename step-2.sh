@@ -7,7 +7,7 @@ set -eu
 cd $SCRIPTDIR/../github-actions
 
 stepNum=1
-stepName=development
+stepName=staging
 branchName="step-$stepNum"
 startCommit=$(git log --reverse -n $stepNum --pretty=format:%H)
 
@@ -21,7 +21,7 @@ git checkout -b $branchName $startCommit
 
 mkdir -p .github/workflows 
 
-cat <<EOT > .github/workflows/$stepName.yml
+cat <<EOT > .github/workflows/main.yml
 name: CD Pipeline
 on: [pull_request]
 jobs:
@@ -29,17 +29,11 @@ jobs:
     environment: $stepName
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - name: Go Tooling Preparation
-        uses: actions/setup-go@v3
-        with:
-          go-version: '1.17'
-          cache: true
-      - run: go vet ./...
-      - run: go build ./...
-      - run: go test ./...
-      - run: go run .
+      - run: echo "Lint"
+      - run: echo "Build"
+      - run: echo "Test"
+      - run: echo "Publish"
+      - run: echo "Deploy"    
 EOT
 
 git add .
