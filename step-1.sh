@@ -22,7 +22,7 @@ git checkout -b $branchName $startCommit
 mkdir -p .github/workflows 
 
 cat <<EOT > .github/workflows/$stepName.yml
-name: CD Pipeline
+name: pr branch jobs
 on: [pull_request]
 jobs:
   $stepName:
